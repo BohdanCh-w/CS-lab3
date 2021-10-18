@@ -1,0 +1,9 @@
+**.sln
+/packages
+**/bin
+**/obj
+**/Properties
+**/packages.config
+**/*.csproj
+/.vs
+**/App.config
