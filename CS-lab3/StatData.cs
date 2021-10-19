@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace CS_lab3 {
     class StatData {
-        public ulong sum { get; set; }
+        public long sum { get; set; }
         public double avrg { get; set; }
         public int moda { get; set; }
 
         public StatData() { }
 
-        public StatData(ulong _sum, double _avrg, int _moda) {
+        public StatData(long _sum, double _avrg, int _moda) {
             sum = _sum;
             avrg = _avrg;
             moda = _moda;
@@ -26,7 +26,7 @@ namespace CS_lab3 {
     class StatDataPartial : StatData {
         public new int[] moda { get; set; }
 
-        public StatDataPartial(ulong _sum, double _avrg, int[] _moda) {
+        public StatDataPartial(long _sum, double _avrg, int[] _moda) {
             sum = _sum;
             avrg = _avrg;
             moda = _moda;

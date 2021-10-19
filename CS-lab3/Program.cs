@@ -11,15 +11,16 @@ namespace CS_lab3 {
         public static int max = 50;
 
         static void Main(string[] args) {
-            int num = 2_000_000_00;
+            int num = 1_000_000;
             int[] data = generateArr(1, max, num);
             ParalellTaskTest(data);
+            ParalellPLINQTest(data);
         }
 
         static void ParalellTaskTest(int[] data) {
             Stopwatch stopwatch = new Stopwatch();
 
-            int[] threadCount = new int[] { 1, 2, 4, 8, 10 };
+            int[] threadCount = new int[] { 1, 2, 4, 8, 10, 100 };
             Console.WriteLine("Paralell Task");
             
             foreach( int c in threadCount ) {
@@ -27,6 +28,22 @@ namespace CS_lab3 {
                 var res = Calculator.CalculateParalelTask(data, c);
                 stopwatch.Stop();
                 Console.Write(res.Result);
+                Console.WriteLine("\t time consumed {0} in {1} threads", stopwatch.ElapsedTicks, c);
+            }
+            Console.WriteLine("\n");
+        }
+
+        static void ParalellPLINQTest(int[] data) {
+            Stopwatch stopwatch = new Stopwatch();
+
+            int[] threadCount = new int[] { 1, 2, 4, 8, 10, 100 };
+            Console.WriteLine("Paralell LINQ");
+            
+            foreach( int c in threadCount ) {
+                stopwatch.Restart();
+                var res = Calculator.CalculatePLINQ(data, c);
+                stopwatch.Stop();
+                Console.Write(res);
                 Console.WriteLine("\t time consumed {0} in {1} threads", stopwatch.ElapsedTicks, c);
             }
             Console.WriteLine("\n");
