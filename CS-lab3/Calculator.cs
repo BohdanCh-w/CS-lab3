@@ -61,6 +61,7 @@ namespace CS_lab3 {
             using(ManualResetEvent resetEvent = new ManualResetEvent(false)) {
                 Action<object> resultCallback = (result) => {
                     resArr[Interlocked.Increment(ref resCounter)-1] = (StatDataPartial)result;
+                    if (resCounter == thread_num) resetEvent.Set();
                 };
 
                 WaitCallback workItem = (tuple) => {

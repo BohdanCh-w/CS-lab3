@@ -17,7 +17,7 @@ namespace CS_lab3 {
             var PLINQTime = ParalellPLINQTest(data);
             var TPoolTime = ParalellThreadPoolTest(data);
 
-            Console.WriteLine("Threads       Tasks       PLINQ");
+            Console.WriteLine("Threads       Tasks       PLINQ       TPool");
             foreach(var key in TaskTime.Keys) {
                 Console.WriteLine($"  {key, 2:d}  :    {TaskTime[key], 8:d}    "
                     + $"{PLINQTime[key], 8:d}    {TPoolTime[key], 8:d}");
