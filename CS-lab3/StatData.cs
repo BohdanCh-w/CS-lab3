@@ -32,4 +32,16 @@ namespace CS_lab3 {
             moda = _moda;
         }        
     }
+
+    class Parameters {
+        public int[] arr { get; set; }
+        public int start { get; set; }
+        public int end { get; set; }
+
+        public Parameters(int[] _arr, int _start, int _end) {
+            arr = _arr;
+            start = _start;
+            end = _end;
+        }
+    };
 }

@@ -13,40 +13,57 @@ namespace CS_lab3 {
         static void Main(string[] args) {
             int num = 1_000_000;
             int[] data = generateArr(1, max, num);
-            ParalellTaskTest(data);
-            ParalellPLINQTest(data);
+            var TaskTime = ParalellTaskTest(data);
+            var PLINQTime = ParalellPLINQTest(data);
+            var TPoolTime = ParalellThreadPoolTest(data);
+
+            Console.WriteLine("Threads       Tasks       PLINQ");
+            foreach(var key in TaskTime.Keys) {
+                Console.WriteLine($"  {key, 2:d}  :    {TaskTime[key], 8:d}    "
+                    + $"{PLINQTime[key], 8:d}    {TPoolTime[key], 8:d}");
+            }
         }
 
-        static void ParalellTaskTest(int[] data) {
+        static Dictionary<int, long> ParalellTaskTest(int[] data) {
             Stopwatch stopwatch = new Stopwatch();
-
-            int[] threadCount = new int[] { 1, 2, 4, 8, 10, 100 };
-            Console.WriteLine("Paralell Task");
+            Dictionary<int, long> time_dict = new Dictionary<int, long>();
+            int[] threadCount = new int[] { 1, 2, 4, 8, 10 };
             
             foreach( int c in threadCount ) {
                 stopwatch.Restart();
                 var res = Calculator.CalculateParalelTask(data, c);
                 stopwatch.Stop();
-                Console.Write(res.Result);
-                Console.WriteLine("\t time consumed {0} in {1} threads", stopwatch.ElapsedTicks, c);
+                time_dict[c] = stopwatch.ElapsedTicks;
             }
-            Console.WriteLine("\n");
+            return time_dict;
         }
 
-        static void ParalellPLINQTest(int[] data) {
+        static Dictionary<int, long> ParalellPLINQTest(int[] data) {
             Stopwatch stopwatch = new Stopwatch();
-
-            int[] threadCount = new int[] { 1, 2, 4, 8, 10, 100 };
-            Console.WriteLine("Paralell LINQ");
+            Dictionary<int, long> time_dict = new Dictionary<int, long>();
+            int[] threadCount = new int[] { 1, 2, 4, 8, 10 };
             
             foreach( int c in threadCount ) {
                 stopwatch.Restart();
                 var res = Calculator.CalculatePLINQ(data, c);
                 stopwatch.Stop();
-                Console.Write(res);
-                Console.WriteLine("\t time consumed {0} in {1} threads", stopwatch.ElapsedTicks, c);
+                time_dict[c] = stopwatch.ElapsedTicks;
             }
-            Console.WriteLine("\n");
+            return time_dict;
+        }
+
+        static Dictionary<int, long> ParalellThreadPoolTest(int[] data) {
+            Stopwatch stopwatch = new Stopwatch();
+            Dictionary<int, long> time_dict = new Dictionary<int, long>();
+            int[] threadCount = new int[] { 1, 2, 4, 8, 10 };
+            
+            foreach( int c in threadCount ) {
+                stopwatch.Restart();
+                var res = Calculator.CalculateThreadPool(data, c);
+                stopwatch.Stop();
+                time_dict[c] = stopwatch.ElapsedTicks;
+            }
+            return time_dict;
         }
 
         static int[] generateArr(int min, int max, int count) {
