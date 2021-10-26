@@ -86,5 +86,20 @@ namespace CS_lab3 {
 
             return new StatData(sum, (double)sum / data.Length, Array.IndexOf(modaSum, modaSum.Max()));
         }
+
+        public static StatData CalculateParalell(int[] data, int thread_num) {
+            long sum = 0;
+            int[] moda = new int[Program.max];
+
+            Parallel.For(0, data.Length, new ParallelOptions { MaxDegreeOfParallelism = thread_num }, i => {
+                lock(data) {
+                    sum += data[i];
+                    moda[data[i] - 1]++;
+                }
+            });
+
+
+            return new StatData(sum, (double)sum / data.Length, Array.IndexOf(moda, moda.Max()));
+        }
     }
 }

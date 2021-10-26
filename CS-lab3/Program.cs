@@ -16,11 +16,12 @@ namespace CS_lab3 {
             var TaskTime = ParalellTaskTest(data);
             var PLINQTime = ParalellPLINQTest(data);
             var TPoolTime = ParalellThreadPoolTest(data);
+            var ParalellTime = ParalellParallelTest(data);
 
-            Console.WriteLine("Threads       Tasks       PLINQ       TPool");
+            Console.WriteLine("Threads       Tasks       PLINQ       TPool     Paralel");
             foreach(var key in TaskTime.Keys) {
                 Console.WriteLine($"  {key, 2:d}  :    {TaskTime[key], 8:d}    "
-                    + $"{PLINQTime[key], 8:d}    {TPoolTime[key], 8:d}");
+                    + $"{PLINQTime[key], 8:d}    {TPoolTime[key], 8:d}    {ParalellTime[key], 8:d}");
             }
         }
 
@@ -60,6 +61,20 @@ namespace CS_lab3 {
             foreach( int c in threadCount ) {
                 stopwatch.Restart();
                 var res = Calculator.CalculateThreadPool(data, c);
+                stopwatch.Stop();
+                time_dict[c] = stopwatch.ElapsedTicks;
+            }
+            return time_dict;
+        }
+
+        static Dictionary<int, long> ParalellParallelTest(int[] data) {
+            Stopwatch stopwatch = new Stopwatch();
+            Dictionary<int, long> time_dict = new Dictionary<int, long>();
+            int[] threadCount = new int[] { 1, 2, 4, 8, 10 };
+            
+            foreach( int c in threadCount ) {
+                stopwatch.Restart();
+                var res = Calculator.CalculateParalell(data, c);
                 stopwatch.Stop();
                 time_dict[c] = stopwatch.ElapsedTicks;
             }
